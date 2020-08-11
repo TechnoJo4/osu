@@ -5,7 +5,7 @@ using osu.Game.Rulesets.Osu.Objects;
 using osu.Game.Rulesets.Osu.UI;
 using osuTK;
 
-namespace osu.Game.Rulesets.Osu.Replays.Movers.Sliders
+namespace osu.Game.Rulesets.Osu.Replays.Movers.Spinners
 {
     public class SimpleSpinnerMover : BaseDanceObjectMover<Spinner>
     {
