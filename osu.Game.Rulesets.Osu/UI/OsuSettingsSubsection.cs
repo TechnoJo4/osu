@@ -45,7 +45,7 @@ namespace osu.Game.Rulesets.Osu.UI
                     LabelText = "Cursor trail additive blending",
                     Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailAdditive)
                 },
-                new SettingsSlider<float, DensitySlider>
+                new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Cursor trail density",
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.CursorTrailDensity)
@@ -55,6 +55,18 @@ namespace osu.Game.Rulesets.Osu.UI
                     LabelText = "Dance mover",
                     Bindable = config.GetBindable<OsuDanceMover>(OsuRulesetSetting.DanceMover)
                 },
+                new SettingsSlider<float, AngleSlider>
+                {
+                    LabelText = "Angle Offset",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.AngleOffset),
+                    KeyboardStep = 1f / 18f
+                },
+                new SettingsSlider<float, MultiplierSlider>
+                {
+                    LabelText = "Jump Multiplier",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
+                    KeyboardStep = 1f / 3f
+                },
                 new SettingsCheckbox
                 {
                     LabelText = "Bounce off borders",
@@ -63,9 +75,14 @@ namespace osu.Game.Rulesets.Osu.UI
             };
         }
 
-        private class DensitySlider : OsuSliderBar<float>
+        private class MultiplierSlider : OsuSliderBar<float>
         {
-            public override string TooltipText => Current.Value.ToString("N2") + "x";
+            public override string TooltipText => Current.Value.ToString("N3") + "x";
+        }
+
+        private class AngleSlider : OsuSliderBar<float>
+        {
+            public override string TooltipText => (Current.Value * 180).ToString("N2") + "deg";
         }
     }
 }

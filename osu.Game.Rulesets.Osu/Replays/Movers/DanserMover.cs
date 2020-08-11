@@ -2,6 +2,7 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Rulesets.Osu.Configuration;
 using osu.Game.Rulesets.Osu.Objects;
 using osuTK;
 using static osu.Game.Rulesets.Osu.Replays.Movers.MoverUtilExtensions;
@@ -10,7 +11,9 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
     public class DanserMover : BaseDanceMover
     {
-        private const float offset = MathF.PI * 0.5f; // = 90
+        private readonly float mult;
+        private readonly float offsetMult;
+        private float offset => MathF.PI * offsetMult;
 
         private Vector2 p1;
         private Vector2 p2;
@@ -20,6 +23,13 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         private float lastAngle;
         private Vector2 lastPoint;
 
+        public DanserMover()
+        {
+            var c = OsuRulesetConfigManager.Instance;
+            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
+        }
+
         public override void OnObjChange()
         {
             if (firstPoint)
@@ -28,7 +38,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
                 firstPoint = false;
             }
 
-            var dst = 0.666f * Vector2.Distance(StartPos, EndPos);
+            var dst = mult * Vector2.Distance(StartPos, EndPos);
 
             var s1 = Start as Slider;
             var s2 = End as Slider;

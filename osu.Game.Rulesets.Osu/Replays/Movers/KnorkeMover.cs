@@ -2,8 +2,8 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using System;
+using osu.Game.Rulesets.Osu.Configuration;
 using osu.Game.Rulesets.Osu.Objects;
-using osu.Game.Rulesets.Osu.UI;
 using osuTK;
 using static osu.Game.Rulesets.Osu.Replays.Movers.MoverUtilExtensions;
 
@@ -11,14 +11,22 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
     public class KnorkeMover : BaseDanceMover
     {
+        private readonly float mult;
+        private readonly float offsetMult;
+        private float offset => MathF.PI * offsetMult;
+
         private Vector2 p1;
         private Vector2 p2;
 
         private bool firstPoint = true;
         private float lastAngle;
 
-        private readonly float width = OsuPlayfield.BASE_SIZE.X;
-        private readonly float height = OsuPlayfield.BASE_SIZE.Y;
+        public KnorkeMover()
+        {
+            var c = OsuRulesetConfigManager.Instance;
+            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
+        }
 
         public override void OnObjChange()
         {
@@ -28,12 +36,12 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
                 firstPoint = false;
             }
 
-            var dst = 0.666f * Vector2.Distance(StartPos, EndPos);
+            var dst = mult * Vector2.Distance(StartPos, EndPos);
 
             var newAngle =
                 Start is Slider s
                     ? s.GetEndAngle()
-                    : lastAngle + MathF.PI;
+                    : lastAngle + offset;
 
             if (newAngle > MathF.PI * 2f) newAngle -= MathF.PI * 2f;
 
