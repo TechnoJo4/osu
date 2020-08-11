@@ -3,6 +3,7 @@
 
 using osu.Framework.Allocation;
 using osu.Framework.Graphics;
+using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Osu.Configuration;
 
@@ -39,7 +40,27 @@ namespace osu.Game.Rulesets.Osu.UI
                     LabelText = "Cursor trail",
                     Bindable = config.GetBindable<bool>(OsuRulesetSetting.ShowCursorTrail)
                 },
+                new SettingsCheckbox
+                {
+                    LabelText = "Cursor trail additive blending",
+                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailAdditive)
+                },
+                new SettingsSlider<float, DensitySlider>
+                {
+                    LabelText = "Cursor trail density",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.CursorTrailDensity)
+                },
+                new SettingsEnumDropdown<OsuDanceMover>
+                {
+                    LabelText = "Dance mover",
+                    Bindable = config.GetBindable<OsuDanceMover>(OsuRulesetSetting.DanceMover)
+                }
             };
+        }
+
+        private class DensitySlider : OsuSliderBar<float>
+        {
+            public override string TooltipText => Current.Value.ToString("N2") + "x";
         }
     }
 }

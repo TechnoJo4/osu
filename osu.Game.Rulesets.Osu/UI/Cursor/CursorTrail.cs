@@ -5,8 +5,10 @@ using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Batches;
+using osu.Framework.Graphics.Colour;
 using osu.Framework.Graphics.OpenGL.Vertices;
 using osu.Framework.Graphics.Primitives;
 using osu.Framework.Graphics.Shaders;
@@ -15,6 +17,8 @@ using osu.Framework.Input;
 using osu.Framework.Input.Events;
 using osu.Framework.Layout;
 using osu.Framework.Timing;
+using osu.Game.Rulesets.Osu.Configuration;
+using osu.Game.Rulesets.Osu.Objects.Drawables;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Graphics.ES30;
@@ -24,6 +28,8 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
     public class CursorTrail : Drawable, IRequireHighFrequencyMousePosition
     {
         private const int max_sprites = 2048;
+
+        private readonly Bindable<float> density = new Bindable<float>(2.5f);
 
         private readonly TrailPart[] parts = new TrailPart[max_sprites];
         private int currentIndex;
@@ -48,9 +54,12 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
         }
 
         [BackgroundDependencyLoader]
-        private void load(ShaderManager shaders)
+        private void load(ShaderManager shaders, OsuRulesetConfigManager config)
         {
+            config.BindWith(OsuRulesetSetting.CursorTrailDensity, density);
             shader = shaders.Load(@"CursorTrail", FragmentShaderDescriptor.TEXTURE);
+
+            DrawableHitCircle.LastHit.BindValueChanged(v => Colour = ColourInfo.SingleColour(v.NewValue.AccentColour.Value));
         }
 
         protected override void LoadComplete()
@@ -147,7 +156,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                     float distance = diff.Length;
                     Vector2 direction = diff / distance;
 
-                    float interval = partSize.X / 2.5f;
+                    float interval = partSize.X / density.Value;
 
                     for (float d = interval; d < distance; d += interval)
                     {

@@ -2,8 +2,10 @@
 // See the LICENCE file in the repository root for full licence text.
 
 using osu.Framework.Allocation;
+using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
+using osu.Game.Rulesets.Osu.Configuration;
 using osu.Game.Rulesets.Osu.UI.Cursor;
 using osu.Game.Skinning;
 
@@ -15,17 +17,20 @@ namespace osu.Game.Rulesets.Osu.Skinning
 
         private bool disjointTrail;
         private double lastTrailTime;
+        private readonly Bindable<bool> additiveTrail = new Bindable<bool>(true);
 
         public LegacyCursorTrail()
         {
-            Blending = BlendingParameters.Additive;
+            additiveTrail.BindValueChanged(v => Blending = v.NewValue ? BlendingParameters.Additive : BlendingParameters.Mixture, true);
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISkinSource skin)
+        private void load(ISkinSource skin, OsuRulesetConfigManager config)
         {
             Texture = skin.GetTexture("cursortrail");
             disjointTrail = skin.GetTexture("cursormiddle") == null;
+
+            config.BindWith(OsuRulesetSetting.CursorTrailAdditive, additiveTrail);
 
             if (Texture != null)
             {

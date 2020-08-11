@@ -19,13 +19,26 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.SnakingInSliders, true);
             Set(OsuRulesetSetting.SnakingOutSliders, true);
             Set(OsuRulesetSetting.ShowCursorTrail, true);
+            Set(OsuRulesetSetting.CursorTrailAdditive, true);
+            Set(OsuRulesetSetting.CursorTrailDensity, 2.5f, 0.1f, 10.0f, 0.05f);
+            Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Linear);
         }
+    }
+
+    public enum OsuDanceMover
+    {
+        Linear,
+        HalfCircle,
+        AngleOffset
     }
 
     public enum OsuRulesetSetting
     {
         SnakingInSliders,
         SnakingOutSliders,
-        ShowCursorTrail
+        ShowCursorTrail,
+        CursorTrailAdditive,
+        CursorTrailDensity,
+        DanceMover
     }
 }

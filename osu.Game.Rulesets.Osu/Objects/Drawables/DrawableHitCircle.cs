@@ -21,6 +21,8 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
 {
     public class DrawableHitCircle : DrawableOsuHitObject, IDrawableHitObjectWithProxiedApproach
     {
+        public static readonly Bindable<DrawableHitCircle> LastHit = new Bindable<DrawableHitCircle>();
+
         public ApproachCircle ApproachCircle { get; }
 
         private readonly IBindable<Vector2> positionBindable = new Bindable<Vector2>();
@@ -57,6 +59,8 @@ namespace osu.Game.Rulesets.Osu.Objects.Drawables
                         {
                             Hit = () =>
                             {
+                                LastHit.Value = this;
+
                                 if (AllJudged)
                                     return false;
 
