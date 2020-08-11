@@ -64,25 +64,6 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
               + 3 * ct * t * t * p2.Y
               + t * t * t * EndY
             );
-            /*
-            if (v.X < 0) v.X = -v.X;
-            if (v.Y < 0) v.Y = -v.Y;
-
-            if (v.X > width)
-            {
-                var m = (int)(v.X / width);
-                v.X -= m * width;
-                if (m % 2 == 1) v.X = width - v.X;
-            }
-
-            if (v.Y > height)
-            {
-                var m = (int)(v.Y / height);
-                v.Y -= m * height;
-                if (m % 2 == 1) v.Y = height - v.X;
-            }
-            */
-            //return v;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
     public class DanserMover : BaseDanceMover
     {
-        private const float pihalf = MathF.PI * 0.5f;
+        private const float offset = MathF.PI * 0.5f; // = 90
 
         private Vector2 p1;
         private Vector2 p2;
@@ -33,7 +33,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             var s1 = Start as Slider;
             var s2 = End as Slider;
 
-            var newAngle = pihalf * invert;
+            var newAngle = offset * invert;
 
             if (s1 != null && s2 != null)
             {
@@ -63,10 +63,10 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             {
                 float angle;
 
-                if (Duration > 1 && AngleBetween(StartPos, lastPoint, EndPos) >= pihalf)
+                if (Duration > 1 && AngleBetween(StartPos, lastPoint, EndPos) >= offset)
                 {
                     invert *= -1;
-                    angle = StartPos.AngleRV(EndPos) - pihalf * invert;
+                    angle = StartPos.AngleRV(EndPos) - offset * invert;
                 }
                 else angle = lastAngle;
 

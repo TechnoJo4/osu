@@ -8,9 +8,13 @@ namespace osu.Game.Rulesets.Osu.Configuration
 {
     public class OsuRulesetConfigManager : RulesetConfigManager<OsuRulesetSetting>
     {
+        // i absolutely hate globals but im lazy so whatever
+        public static OsuRulesetConfigManager Instance { get; private set; }
+
         public OsuRulesetConfigManager(SettingsStore settings, RulesetInfo ruleset, int? variant = null)
             : base(settings, ruleset, variant)
         {
+            Instance = this;
         }
 
         protected override void InitialiseDefaults()
@@ -21,7 +25,8 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.ShowCursorTrail, true);
             Set(OsuRulesetSetting.CursorTrailAdditive, true);
             Set(OsuRulesetSetting.CursorTrailDensity, 2.5f, 0.1f, 10.0f, 0.05f);
-            Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Linear);
+            Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Danser);
+            Set(OsuRulesetSetting.BorderBounce, true);
         }
     }
 
@@ -29,7 +34,8 @@ namespace osu.Game.Rulesets.Osu.Configuration
     {
         Linear,
         HalfCircle,
-        AngleOffset
+        Danser,
+        Knorke
     }
 
     public enum OsuRulesetSetting
@@ -39,6 +45,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
         ShowCursorTrail,
         CursorTrailAdditive,
         CursorTrailDensity,
-        DanceMover
+        DanceMover,
+        BorderBounce
     }
 }

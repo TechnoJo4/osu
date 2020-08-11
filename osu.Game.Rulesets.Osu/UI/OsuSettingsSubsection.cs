@@ -54,6 +54,11 @@ namespace osu.Game.Rulesets.Osu.UI
                 {
                     LabelText = "Dance mover",
                     Bindable = config.GetBindable<OsuDanceMover>(OsuRulesetSetting.DanceMover)
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Bounce off borders",
+                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.BorderBounce)
                 }
             };
         }
