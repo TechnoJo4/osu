@@ -36,7 +36,7 @@ namespace osu.Game.Rulesets.Osu.Replays
         private readonly BaseDanceObjectMover<Spinner> spinnerMover;
 
         private bool tapRight;
-        private const double frame_time = 1000.0 / 144.0;
+        private readonly double frameTime;
 
         // yes, this is intended, i like expression body.
         // ReSharper disable once AssignmentInConditionalExpression
@@ -45,7 +45,9 @@ namespace osu.Game.Rulesets.Osu.Replays
         public OsuDanceAutoGenerator(IBeatmap beatmap)
             : base(beatmap)
         {
-            mover = GetMover(OsuRulesetConfigManager.Instance.Get<OsuDanceMover>(OsuRulesetSetting.DanceMover));
+            var c = OsuRulesetConfigManager.Instance;
+            frameTime = 1000.0 / c.Get<float>(OsuRulesetSetting.ReplayFramerate);
+            mover = GetMover(c.Get<OsuDanceMover>(OsuRulesetSetting.DanceMover));
             sliderMover = new SimpleSliderMover();
             spinnerMover = new SimpleSpinnerMover();
         }
@@ -61,7 +63,7 @@ namespace osu.Game.Rulesets.Osu.Replays
                     var tap = action();
                     AddFrameToReplay(new OsuReplayFrame(s.StartTime, s.StackedPosition, tap));
 
-                    for (double t = s.StartTime + frame_time; t < s.EndTime; t += frame_time)
+                    for (double t = s.StartTime + frameTime; t < s.EndTime; t += frameTime)
                         AddFrameToReplay(new OsuReplayFrame(t, sliderMover.Update(t), tap));
 
                     break;
@@ -73,7 +75,7 @@ namespace osu.Game.Rulesets.Osu.Replays
                     tap = action();
                     AddFrameToReplay(new OsuReplayFrame(s.StartTime, s.StackedPosition, tap));
 
-                    for (double t = s.StartTime + frame_time; t < s.EndTime; t += frame_time)
+                    for (double t = s.StartTime + frameTime; t < s.EndTime; t += frameTime)
                         AddFrameToReplay(new OsuReplayFrame(t, spinnerMover.Update(t), tap));
 
                     break;
@@ -112,7 +114,7 @@ namespace osu.Game.Rulesets.Osu.Replays
                 mover.End = e;
                 mover.OnObjChange();
 
-                for (double t = s.GetEndTime() + frame_time; t < e.StartTime; t += frame_time)
+                for (double t = s.GetEndTime() + frameTime; t < e.StartTime; t += frameTime)
                 {
                     var v = mover.Update(t);
 

@@ -50,6 +50,11 @@ namespace osu.Game.Rulesets.Osu.UI
                     LabelText = "Cursor trail density",
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.CursorTrailDensity)
                 },
+                new SettingsSlider<float, FramerateSlider>
+                {
+                    LabelText = "Autoplay framerate",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.ReplayFramerate)
+                },
                 new SettingsEnumDropdown<OsuDanceMover>
                 {
                     LabelText = "Dance mover",
@@ -83,6 +88,11 @@ namespace osu.Game.Rulesets.Osu.UI
         private class AngleSlider : OsuSliderBar<float>
         {
             public override string TooltipText => (Current.Value * 180).ToString("N2") + "deg";
+        }
+
+        private class FramerateSlider : OsuSliderBar<float>
+        {
+            public override string TooltipText => Current.Value.ToString("N0") + "fps";
         }
     }
 }

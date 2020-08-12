@@ -25,6 +25,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.ShowCursorTrail, true);
             Set(OsuRulesetSetting.CursorTrailAdditive, true);
             Set(OsuRulesetSetting.CursorTrailDensity, 2.5f, 0.1f, 10.0f, 0.05f);
+            Set(OsuRulesetSetting.ReplayFramerate, 120, 24, 1000, 2);
             Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Danser);
             Set(OsuRulesetSetting.AngleOffset, 0.5f, 0f, 2f, 0.001f);
             Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, 0.001f);
@@ -47,6 +48,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
         ShowCursorTrail,
         CursorTrailAdditive,
         CursorTrailDensity,
+        ReplayFramerate,
         DanceMover,
         AngleOffset,
         JumpMulti,
