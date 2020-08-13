@@ -38,7 +38,8 @@ namespace osu.Game.Rulesets.Osu.Configuration
         Linear,
         HalfCircle,
         Danser,
-        Knorke
+        Knorke,
+        Momentum
     }
 
     public enum OsuRulesetSetting

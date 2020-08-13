@@ -60,16 +60,16 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public override Vector2 Update(double time)
         {
             var t = T(time);
-            var ct = 1 - t;
+            var r = 1 - t;
 
             return new Vector2(
-                ct * ct * ct * StartX
-              + 3 * ct * ct * t * p1.X
-              + 3 * ct * t * t * p2.X
+                r * r * r * StartX
+              + r * r * t * p1.X * 3
+              + r * t * t * p2.X * 3
               + t * t * t * EndX,
-                ct * ct * ct * StartY
-              + 3 * ct * ct * t * p1.Y
-              + 3 * ct * t * t * p2.Y
+                r * r * r * StartY
+              + r * r * t * p1.Y * 3
+              + r * t * t * p2.Y * 3
               + t * t * t * EndY
             );
         }

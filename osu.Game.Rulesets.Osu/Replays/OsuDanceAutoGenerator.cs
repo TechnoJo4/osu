@@ -24,9 +24,10 @@ namespace osu.Game.Rulesets.Osu.Replays
             mover switch
             {
                 Linear => new LinearMover(),
+                HalfCircle => new HalfCircleMover(),
                 Knorke => new KnorkeMover(),
                 Danser => new DanserMover(),
-                HalfCircle => new HalfCircleMover(),
+                Momentum => new MomentumMover(),
                 _ => new LinearMover()
             };
 
@@ -34,6 +35,7 @@ namespace osu.Game.Rulesets.Osu.Replays
         private readonly BaseDanceMover mover;
         private readonly BaseDanceObjectMover<Slider> sliderMover;
         private readonly BaseDanceObjectMover<Spinner> spinnerMover;
+        private readonly OsuRulesetConfigManager config;
 
         private bool tapRight;
         private readonly double frameTime;
@@ -45,11 +47,13 @@ namespace osu.Game.Rulesets.Osu.Replays
         public OsuDanceAutoGenerator(IBeatmap beatmap)
             : base(beatmap)
         {
-            var c = OsuRulesetConfigManager.Instance;
-            frameTime = 1000.0 / c.Get<float>(OsuRulesetSetting.ReplayFramerate);
-            mover = GetMover(c.Get<OsuDanceMover>(OsuRulesetSetting.DanceMover));
+            config = OsuRulesetConfigManager.Instance;
+            frameTime = 1000.0 / config.Get<float>(OsuRulesetSetting.ReplayFramerate);
+            mover = GetMover(config.Get<OsuDanceMover>(OsuRulesetSetting.DanceMover));
             sliderMover = new SimpleSliderMover();
             spinnerMover = new SimpleSpinnerMover();
+
+            mover.Beatmap = Beatmap;
         }
 
         private void objectGenerate(OsuHitObject o)
@@ -90,10 +94,10 @@ namespace osu.Game.Rulesets.Osu.Replays
 
         public override Replay Generate()
         {
-            var s = Beatmap.HitObjects[0];
-            AddFrameToReplay(new OsuReplayFrame(-100000, s.Position));
-            AddFrameToReplay(new OsuReplayFrame(s.StartTime - 1500, s.Position));
-            AddFrameToReplay(new OsuReplayFrame(s.StartTime - 1500, s.Position));
+            var o = Beatmap.HitObjects[0];
+            AddFrameToReplay(new OsuReplayFrame(-100000, o.Position));
+            AddFrameToReplay(new OsuReplayFrame(o.StartTime - 1500, o.Position));
+            AddFrameToReplay(new OsuReplayFrame(o.StartTime - 1500, o.Position));
 
             var bs = OsuPlayfield.BASE_SIZE;
 
@@ -105,20 +109,19 @@ namespace osu.Game.Rulesets.Osu.Replays
             var y0 = (bs.Y - yf) / 2f;
             var y1 = yf + y0;
 
-            for (int i = 1; i < Beatmap.HitObjects.Count; i++)
+            for (int i = 0; i < Beatmap.HitObjects.Count - 1; i++)
             {
-                var e = Beatmap.HitObjects[i];
-                objectGenerate(s);
+                o = Beatmap.HitObjects[i];
+                objectGenerate(o);
 
-                mover.Start = s;
-                mover.End = e;
+                mover.ObjectIndex = i;
                 mover.OnObjChange();
 
-                for (double t = s.GetEndTime() + frameTime; t < e.StartTime; t += frameTime)
+                for (double t = o.GetEndTime() + frameTime; t < mover.End.StartTime; t += frameTime)
                 {
                     var v = mover.Update(t);
 
-                    if (OsuRulesetConfigManager.Instance.Get<bool>(OsuRulesetSetting.BorderBounce))
+                    if (config.Get<bool>(OsuRulesetSetting.BorderBounce))
                     {
                         if (v.X < x0) v.X = x0 - (v.X - x0);
                         if (v.Y < y0) v.Y = y0 - (v.Y - y0);
@@ -144,8 +147,6 @@ namespace osu.Game.Rulesets.Osu.Replays
 
                     AddFrameToReplay(new OsuReplayFrame(t, v));
                 }
-
-                s = e;
             }
 
             objectGenerate(Beatmap.HitObjects[^1]);
@@ -170,8 +171,11 @@ namespace osu.Game.Rulesets.Osu.Replays
 
         protected float T(double time) => (float)((time - StartTime) / Duration);
 
-        public OsuHitObject Start { set; protected get; }
-        public OsuHitObject End { set; protected get; }
+        public int ObjectIndex { set; protected get; }
+        public OsuBeatmap Beatmap { set; protected get; }
+        public OsuHitObject Start => Beatmap.HitObjects[ObjectIndex];
+        public OsuHitObject End => Beatmap.HitObjects[ObjectIndex + 1];
+        public OsuHitObject Next => Beatmap.HitObjects[ObjectIndex + 2];
         public virtual void OnObjChange() { }
         public abstract Vector2 Update(double time);
     }
