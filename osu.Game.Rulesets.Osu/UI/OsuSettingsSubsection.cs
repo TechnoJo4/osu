@@ -76,13 +76,12 @@ namespace osu.Game.Rulesets.Osu.UI
                 {
                     LabelText = "Next Jump Multiplier",
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
-                    KeyboardStep = 1f / 6f
+                    KeyboardStep = 1f / 12f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Next Multiplier",
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
-                    KeyboardStep = 1f / 6f
                 },
                 new SettingsCheckbox
                 {

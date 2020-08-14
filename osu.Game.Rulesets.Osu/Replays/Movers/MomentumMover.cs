@@ -27,18 +27,35 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             njmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
         }
 
+        private float nextAngle()
+        {
+            var obj = Beatmap.HitObjects;
+
+            for (var i = ObjectIndex + 1; i < obj.Count - 1; ++i)
+            {
+                var o = obj[i];
+                if (o is Slider s) return s.GetStartAngle();
+                if (o.StackedPosition == obj[i + 1].Position) continue;
+
+                return o.StackedPosition.AngleRV(obj[i + 1].StackedPosition);
+            }
+
+            return (obj[^1] as Slider)?.GetEndAngle()
+                ?? ((Start as Slider)?.GetEndAngle() ?? StartPos.AngleRV(last)) + MathF.PI;
+        }
+
         public override void OnObjChange()
         {
             var s = Start as Slider;
             var dst = Vector2.Distance(StartPos, EndPos);
 
-            var a2 =
+            var a2 = nextAngle(); /*
                 End is Slider e
                     ? e.GetStartAngle()
                     : ObjectIndex + 2 < Beatmap.HitObjects.Count
                         ? EndPos.AngleRV(Next.StackedPosition)
                         : (s?.GetEndAngle() ?? StartPos.AngleRV(last))
-                        + MathF.PI;
+                        + MathF.PI;*/
 
             var a1 =
                 s != null
