@@ -11,7 +11,9 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
     public class MomentumMover : BaseDanceMover
     {
-        private readonly float mult;
+        private readonly float jmult;
+        private readonly float nmult;
+        private readonly float njmult;
 
         private Vector2 p1;
         private Vector2 p2;
@@ -20,13 +22,15 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public MomentumMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            jmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            nmult = c.Get<float>(OsuRulesetSetting.NextMulti);
+            njmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
         }
 
         public override void OnObjChange()
         {
             var s = Start as Slider;
-            var len = Vector2.Distance(StartPos, EndPos) * mult;
+            var dst = Vector2.Distance(StartPos, EndPos);
 
             var a2 =
                 End is Slider e
@@ -36,8 +40,6 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
                         : (s?.GetEndAngle() ?? StartPos.AngleRV(last))
                         + MathF.PI;
 
-            p2 = V2FromRad(a2, len) + EndPos;
-
             var a1 =
                 s != null
                     ? s.GetEndAngle()
@@ -45,7 +47,11 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
                         ? a2 + MathF.PI
                         : StartPos.AngleRV(last);
 
-            p1 = V2FromRad(a1, len) + StartPos;
+            p1 = V2FromRad(a1, dst * jmult) + StartPos;
+
+            p2 = (1 - nmult) * (V2FromRad(a1, dst * njmult) + StartPos)
+               + nmult * (V2FromRad(a2, dst * njmult) + EndPos);
+
             if (!(End is Slider) && StartPos != EndPos) last = p2;
         }
 

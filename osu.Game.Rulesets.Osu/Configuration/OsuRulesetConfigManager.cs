@@ -26,9 +26,11 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.CursorTrailAdditive, true);
             Set(OsuRulesetSetting.CursorTrailDensity, 2.5f, 0.1f, 10.0f, 0.05f);
             Set(OsuRulesetSetting.ReplayFramerate, 120, 24, 1000, 2);
-            Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Danser);
+            Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Momentum);
             Set(OsuRulesetSetting.AngleOffset, 0.5f, 0f, 2f, 0.001f);
-            Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, 0.001f);
+            Set(OsuRulesetSetting.JumpMulti, 0.5f, 0f, 2f, 0.001f);
+            Set(OsuRulesetSetting.NextJumpMulti, 2f / 3f, 0f, 2f, 0.001f);
+            Set(OsuRulesetSetting.NextMulti, 0.9f, 0f, 1f, 0.001f);
             Set(OsuRulesetSetting.BorderBounce, true);
         }
     }
@@ -53,6 +55,8 @@ namespace osu.Game.Rulesets.Osu.Configuration
         DanceMover,
         AngleOffset,
         JumpMulti,
+        NextJumpMulti,
+        NextMulti,
         BorderBounce,
     }
 }

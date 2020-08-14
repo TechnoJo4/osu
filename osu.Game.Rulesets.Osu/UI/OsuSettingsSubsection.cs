@@ -72,6 +72,18 @@ namespace osu.Game.Rulesets.Osu.UI
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
                     KeyboardStep = 1f / 6f
                 },
+                new SettingsSlider<float, MultiplierSlider>
+                {
+                    LabelText = "Next Jump Multiplier",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
+                    KeyboardStep = 1f / 6f
+                },
+                new SettingsSlider<float, MultiplierSlider>
+                {
+                    LabelText = "Next Multiplier",
+                    Bindable = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
+                    KeyboardStep = 1f / 6f
+                },
                 new SettingsCheckbox
                 {
                     LabelText = "Bounce off borders",
