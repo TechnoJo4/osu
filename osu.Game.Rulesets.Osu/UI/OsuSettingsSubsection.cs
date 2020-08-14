@@ -70,7 +70,7 @@ namespace osu.Game.Rulesets.Osu.UI
                 {
                     LabelText = "Jump Multiplier",
                     Bindable = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
-                    KeyboardStep = 1f / 3f
+                    KeyboardStep = 1f / 6f
                 },
                 new SettingsCheckbox
                 {

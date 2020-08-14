@@ -11,24 +11,22 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
     public class MomentumMover : BaseDanceMover
     {
-        private readonly float jmult;
+        private readonly float mult;
 
         private Vector2 p1;
         private Vector2 p2;
         private Vector2 last;
 
-        //public OsuHitObject Last => Beatmap.HitObjects[ObjectIndex - 1];
-
         public MomentumMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            jmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
         }
 
         public override void OnObjChange()
         {
             var s = Start as Slider;
-            var len = Vector2.Distance(StartPos, EndPos) * jmult;
+            var len = Vector2.Distance(StartPos, EndPos) * mult;
 
             var a2 =
                 End is Slider e
@@ -48,7 +46,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
                         : StartPos.AngleRV(last);
 
             p1 = V2FromRad(a1, len) + StartPos;
-            if (!(End is Slider)) last = p2;
+            if (!(End is Slider) && StartPos != EndPos) last = p2;
         }
 
         public override Vector2 Update(double time)
