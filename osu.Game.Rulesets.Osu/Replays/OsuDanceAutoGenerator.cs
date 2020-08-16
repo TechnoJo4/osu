@@ -51,7 +51,7 @@ namespace osu.Game.Rulesets.Osu.Replays
             frameTime = 1000.0 / config.Get<float>(OsuRulesetSetting.ReplayFramerate);
             mover = GetMover(config.Get<OsuDanceMover>(OsuRulesetSetting.DanceMover));
             sliderMover = new SimpleSliderMover();
-            spinnerMover = new SimpleSpinnerMover();
+            spinnerMover = new HeartSpinnerMover();
 
             mover.Beatmap = Beatmap;
 
