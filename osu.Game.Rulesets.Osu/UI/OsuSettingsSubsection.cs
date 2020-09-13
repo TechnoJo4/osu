@@ -45,6 +45,16 @@ namespace osu.Game.Rulesets.Osu.UI
                     LabelText = "Cursor trail additive blending",
                     Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailAdditive)
                 },
+                new SettingsCheckbox
+                {
+                    LabelText = "Cursor trail combo coloring",
+                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailCombo)
+                },
+                new SettingsCheckbox
+                {
+                    LabelText = "Cursor trail hue shifting",
+                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailHueShift)
+                },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Cursor trail density",

@@ -19,6 +19,7 @@ using osu.Framework.Layout;
 using osu.Framework.Timing;
 using osu.Game.Rulesets.Osu.Configuration;
 using osu.Game.Rulesets.Osu.Objects.Drawables;
+using osu.Game.Rulesets.Osu.Skinning;
 using osuTK;
 using osuTK.Graphics;
 using osuTK.Graphics.ES30;
@@ -29,6 +30,8 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
     {
         private const int max_sprites = 2048;
 
+        private readonly Bindable<bool> combo = new Bindable<bool>(true);
+        private readonly Bindable<bool> shift = new Bindable<bool>(true);
         private readonly Bindable<float> density = new Bindable<float>(2.5f);
 
         private readonly TrailPart[] parts = new TrailPart[max_sprites];
@@ -56,10 +59,12 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
         [BackgroundDependencyLoader]
         private void load(ShaderManager shaders, OsuRulesetConfigManager config)
         {
+            config.BindWith(OsuRulesetSetting.CursorTrailCombo, combo);
+            config.BindWith(OsuRulesetSetting.CursorTrailHueShift, shift);
             config.BindWith(OsuRulesetSetting.CursorTrailDensity, density);
             shader = shaders.Load(@"CursorTrail", FragmentShaderDescriptor.TEXTURE);
 
-            DrawableHitCircle.LastHit.BindValueChanged(v => Colour = ColourInfo.SingleColour(v.NewValue.AccentColour.Value));
+            DrawableHitCircle.LastHit.BindValueChanged(v => Colour = ColourInfo.SingleColour(combo.Value ? v.NewValue.AccentColour.Value : Color4.White));
         }
 
         protected override void LoadComplete()
@@ -200,6 +205,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
             private Texture texture;
 
             private float time;
+            private bool shift;
 
             private readonly TrailPart[] parts = new TrailPart[max_sprites];
             private Vector2 size;
@@ -219,6 +225,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                 texture = Source.texture;
                 size = Source.partSize;
                 time = Source.time;
+                shift = Source.shift.Value;
 
                 Source.parts.CopyTo(parts, 0);
             }
@@ -242,12 +249,14 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                     if (time - part.Time >= 1)
                         continue;
 
+                    var colour = shift ? DrawColourInfo.Colour.HueShift(time - part.Time) : DrawColourInfo.Colour;
+
                     vertexBatch.Add(new TexturedTrailVertex
                     {
                         Position = new Vector2(part.Position.X - size.X / 2, part.Position.Y + size.Y / 2),
                         TexturePosition = textureRect.BottomLeft,
                         TextureRect = new Vector4(0, 0, 1, 1),
-                        Colour = DrawColourInfo.Colour.BottomLeft.Linear,
+                        Colour = colour.BottomLeft.Linear,
                         Time = part.Time
                     });
 
@@ -256,7 +265,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                         Position = new Vector2(part.Position.X + size.X / 2, part.Position.Y + size.Y / 2),
                         TexturePosition = textureRect.BottomRight,
                         TextureRect = new Vector4(0, 0, 1, 1),
-                        Colour = DrawColourInfo.Colour.BottomRight.Linear,
+                        Colour = colour.BottomRight.Linear,
                         Time = part.Time
                     });
 
@@ -265,7 +274,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                         Position = new Vector2(part.Position.X + size.X / 2, part.Position.Y - size.Y / 2),
                         TexturePosition = textureRect.TopRight,
                         TextureRect = new Vector4(0, 0, 1, 1),
-                        Colour = DrawColourInfo.Colour.TopRight.Linear,
+                        Colour = colour.TopRight.Linear,
                         Time = part.Time
                     });
 
@@ -274,7 +283,7 @@ namespace osu.Game.Rulesets.Osu.UI.Cursor
                         Position = new Vector2(part.Position.X - size.X / 2, part.Position.Y - size.Y / 2),
                         TexturePosition = textureRect.TopLeft,
                         TextureRect = new Vector4(0, 0, 1, 1),
-                        Colour = DrawColourInfo.Colour.TopLeft.Linear,
+                        Colour = colour.TopLeft.Linear,
                         Time = part.Time
                     });
                 }
