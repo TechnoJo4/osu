@@ -6,11 +6,8 @@ using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
-<<<<<<< HEAD
 using osu.Game.Rulesets.Osu.Configuration;
-=======
 using osu.Game.Configuration;
->>>>>>> 798dc9bc25c6451a35ec9c4fd046e3ee2672a381
 using osu.Game.Rulesets.Osu.UI.Cursor;
 using osu.Game.Skinning;
 
