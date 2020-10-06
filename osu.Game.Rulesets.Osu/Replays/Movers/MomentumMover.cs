@@ -48,9 +48,8 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             var dst = Vector2.Distance(StartPos, EndPos);
 
             var s = Start as Slider;
-            var d = ObjectsDuring[ObjectIndex];
             var (a2, afs) = nextAngle();
-            var a1 = (d ? s?.GetStartAngle() + MathF.PI : s?.GetEndAngle()) ?? (ObjectIndex == 0 ? a2 + MathF.PI : StartPos.AngleRV(last));
+            var a1 = (ObjectsDuring[ObjectIndex] ? s?.GetStartAngle() + MathF.PI : s?.GetEndAngle()) ?? (ObjectIndex == 0 ? a2 + MathF.PI : StartPos.AngleRV(last));
 
             p1 = V2FromRad(a1, dst * jmult) + StartPos;
             p2 = V2FromRad((1 - nmult) * (afs ? a2 : EndPos.AngleRV(p1)) + nmult * a2, dst * njmult) + EndPos;
