@@ -15,8 +15,8 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 
         public override void OnObjChange()
         {
-            middle = new Vector2((StartX + EndX) / 2, (StartY + EndY) / 2);
-            ang = Start.StackedPosition.AngleRV(middle);
+            middle = (StartPos + EndPos) / 2;
+            ang = StartPos.AngleRV(middle);
             radius = Vector2.Distance(middle, Start.StackedPosition);
         }
 

@@ -9,15 +9,18 @@ namespace osu.Game.Rulesets.Osu.Skinning
 {
     public static class DanceSkinExtensions
     {
-        public static Color4 HueShift(this Color4 c, float shift)
+        public static (float, float, float) HueShiftConstants(float shift)
         {
             shift *= 2 * PI;
             var cs = Cos(shift);
             var cs3 = (1f - cs) / 3f;
             var ss3 = Sqrt(1f / 3f) * Sin(shift);
-            var x = cs + cs3;
-            var y = cs3 + ss3;
-            var z = cs3 - ss3;
+            return (cs + cs3, cs3 + ss3, cs3 - ss3);
+        }
+
+        public static Color4 HueShift(this Color4 c, float shift)
+        {
+            var (x, y, z) = HueShiftConstants(shift);
 
             return new Color4(
                 c.R * x + c.G * y + c.B * z,

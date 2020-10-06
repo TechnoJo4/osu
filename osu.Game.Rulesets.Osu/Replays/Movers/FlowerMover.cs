@@ -9,7 +9,7 @@ using static osu.Game.Rulesets.Osu.Replays.Movers.MoverUtilExtensions;
 
 namespace osu.Game.Rulesets.Osu.Replays.Movers
 {
-    public class DanserMover : BaseDanceMover
+    public class FlowerMover : BaseDanceMover
     {
         private readonly float mult;
         private readonly float offsetMult;
@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         private float lastAngle;
         private Vector2 lastPoint;
 
-        public DanserMover()
+        public FlowerMover()
         {
             var c = OsuRulesetConfigManager.Instance;
             mult = c.Get<float>(OsuRulesetSetting.JumpMulti);

@@ -27,20 +27,20 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             njmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
         }
 
-        private float nextAngle()
+        private (float, bool) nextAngle()
         {
             var obj = Beatmap.HitObjects;
 
             for (var i = ObjectIndex + 1; i < obj.Count - 1; ++i)
             {
                 var o = obj[i];
-                if (o is Slider s) return s.GetStartAngle();
+                if (o is Slider s) return (s.GetStartAngle(), true);
                 if (o.StackedPosition != obj[i + 1].Position)
-                    return o.StackedPosition.AngleRV(obj[i + 1].StackedPosition);
+                    return (o.StackedPosition.AngleRV(obj[i + 1].StackedPosition), false);
             }
 
-            return (obj[^1] as Slider)?.GetEndAngle()
-                ?? ((Start as Slider)?.GetEndAngle() ?? StartPos.AngleRV(last)) + MathF.PI;
+            return ((obj[^1] as Slider)?.GetEndAngle()
+                 ?? ((Start as Slider)?.GetEndAngle() ?? StartPos.AngleRV(last)) + MathF.PI, false);
         }
 
         public override void OnObjChange()
@@ -49,11 +49,11 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 
             var s = Start as Slider;
             var d = ObjectsDuring[ObjectIndex];
-            var a2 = nextAngle();
+            var (a2, afs) = nextAngle();
             var a1 = (d ? s?.GetStartAngle() + MathF.PI : s?.GetEndAngle()) ?? (ObjectIndex == 0 ? a2 + MathF.PI : StartPos.AngleRV(last));
 
             p1 = V2FromRad(a1, dst * jmult) + StartPos;
-            p2 = (1 - nmult) * (V2FromRad(a1, dst * njmult) + StartPos) + nmult * (V2FromRad(a2, dst * njmult) + EndPos);
+            p2 = V2FromRad((1 - nmult) * (afs ? a2 : EndPos.AngleRV(p1)) + nmult * a2, dst * njmult) + EndPos;
 
             if (!(End is Slider) && StartPos != EndPos) last = p2;
         }

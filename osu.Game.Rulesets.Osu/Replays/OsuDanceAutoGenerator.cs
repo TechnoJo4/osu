@@ -20,12 +20,11 @@ namespace osu.Game.Rulesets.Osu.Replays
     public class OsuDanceAutoGenerator : OsuAutoGeneratorBase
     {
         public static BaseDanceMover GetMover(OsuDanceMover mover) =>
-            mover switch
-            {
+            mover switch {
                 Linear => new LinearMover(),
                 HalfCircle => new HalfCircleMover(),
                 Knorke => new KnorkeMover(),
-                Danser => new DanserMover(),
+                Flower => new FlowerMover(),
                 Momentum => new MomentumMover(),
                 _ => new LinearMover()
             };

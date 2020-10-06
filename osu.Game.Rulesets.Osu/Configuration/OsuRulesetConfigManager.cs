@@ -41,7 +41,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
     {
         Linear,
         HalfCircle,
-        Danser,
+        Flower,
         Knorke,
         Momentum
     }
