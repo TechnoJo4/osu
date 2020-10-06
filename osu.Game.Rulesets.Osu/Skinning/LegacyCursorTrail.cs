@@ -1,11 +1,16 @@
 // Copyright (c) ppy Pty Ltd <contact@ppy.sh>. Licensed under the MIT Licence.
 // See the LICENCE file in the repository root for full licence text.
 
+using System;
 using osu.Framework.Allocation;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Input.Events;
+<<<<<<< HEAD
 using osu.Game.Rulesets.Osu.Configuration;
+=======
+using osu.Game.Configuration;
+>>>>>>> 798dc9bc25c6451a35ec9c4fd046e3ee2672a381
 using osu.Game.Rulesets.Osu.UI.Cursor;
 using osu.Game.Skinning;
 
@@ -18,6 +23,7 @@ namespace osu.Game.Rulesets.Osu.Skinning
         private bool disjointTrail;
         private double lastTrailTime;
         private readonly Bindable<bool> additiveTrail = new Bindable<bool>(true);
+        private IBindable<float> cursorSize;
 
         public LegacyCursorTrail()
         {
@@ -25,23 +31,27 @@ namespace osu.Game.Rulesets.Osu.Skinning
         }
 
         [BackgroundDependencyLoader]
-        private void load(ISkinSource skin, OsuRulesetConfigManager config)
+        private void load(ISkinSource skin, OsuConfigManager config, OsuRulesetConfigManager osuConfig)
         {
             Texture = skin.GetTexture("cursortrail");
             disjointTrail = skin.GetTexture("cursormiddle") == null;
 
-            config.BindWith(OsuRulesetSetting.CursorTrailAdditive, additiveTrail);
+            osuConfig.BindWith(OsuRulesetSetting.CursorTrailAdditive, additiveTrail);
 
             if (Texture != null)
             {
                 // stable "magic ratio". see OsuPlayfieldAdjustmentContainer for full explanation.
                 Texture.ScaleAdjust *= 1.6f;
             }
+
+            cursorSize = config.GetBindable<float>(OsuSetting.GameplayCursorSize).GetBoundCopy();
         }
 
         protected override double FadeDuration => disjointTrail ? 150 : 500;
 
         protected override bool InterpolateMovements => !disjointTrail;
+
+        protected override float IntervalMultiplier => 1 / Math.Max(cursorSize.Value, 1);
 
         protected override bool OnMouseMove(MouseMoveEvent e)
         {
