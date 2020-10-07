@@ -30,9 +30,9 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.ReplayFramerate, 120, 24, 1000, 2);
             Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Momentum);
             Set(OsuRulesetSetting.AngleOffset, 0.5f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.JumpMulti, 0.5f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.NextJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.NextMulti, 0.95f, 0f, 1f, float.Epsilon);
+            Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.NextJumpMulti, 5f / 6f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.NextMulti, 0.6f, 0f, 1f, float.Epsilon);
             Set(OsuRulesetSetting.BorderBounce, true);
         }
     }
@@ -42,7 +42,6 @@ namespace osu.Game.Rulesets.Osu.Configuration
         Linear,
         HalfCircle,
         Flower,
-        Knorke,
         Momentum
     }
 

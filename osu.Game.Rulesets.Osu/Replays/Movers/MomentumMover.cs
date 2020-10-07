@@ -62,6 +62,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             var t = T(time);
             var r = 1 - t;
 
+            // cubic bézier curve
             return new Vector2(
                 r * r * r * StartX
               + r * r * t * p1.X * 3

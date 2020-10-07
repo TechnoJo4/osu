@@ -23,7 +23,6 @@ namespace osu.Game.Rulesets.Osu.Replays
             mover switch {
                 Linear => new LinearMover(),
                 HalfCircle => new HalfCircleMover(),
-                Knorke => new KnorkeMover(),
                 Flower => new FlowerMover(),
                 Momentum => new MomentumMover(),
                 _ => new LinearMover()
@@ -39,7 +38,7 @@ namespace osu.Game.Rulesets.Osu.Replays
         private bool tapRight;
         private readonly double frameTime;
 
-        // yes, this is intended, i like expression body.
+        // yes, this is intended.
         // ReSharper disable once AssignmentInConditionalExpression
         private OsuAction action() => (tapRight = !tapRight) ? OsuAction.LeftButton : OsuAction.RightButton;
 

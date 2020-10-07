@@ -43,60 +43,60 @@ namespace osu.Game.Rulesets.Osu.UI
                 new SettingsCheckbox
                 {
                     LabelText = "Cursor trail additive blending",
-                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailAdditive)
+                    Current = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailAdditive)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Cursor trail combo coloring",
-                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailCombo)
+                    Current = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailCombo)
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Cursor trail hue shifting",
-                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailHueShift)
+                    Current = config.GetBindable<bool>(OsuRulesetSetting.CursorTrailHueShift)
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Cursor trail density",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.CursorTrailDensity)
+                    Current = config.GetBindable<float>(OsuRulesetSetting.CursorTrailDensity)
                 },
                 new SettingsSlider<float, FramerateSlider>
                 {
                     LabelText = "Autoplay framerate",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.ReplayFramerate)
+                    Current = config.GetBindable<float>(OsuRulesetSetting.ReplayFramerate)
                 },
                 new SettingsEnumDropdown<OsuDanceMover>
                 {
                     LabelText = "Dance mover",
-                    Bindable = config.GetBindable<OsuDanceMover>(OsuRulesetSetting.DanceMover)
+                    Current = config.GetBindable<OsuDanceMover>(OsuRulesetSetting.DanceMover)
                 },
                 new SettingsSlider<float, AngleSlider>
                 {
                     LabelText = "Angle Offset",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.AngleOffset),
+                    Current = config.GetBindable<float>(OsuRulesetSetting.AngleOffset),
                     KeyboardStep = 1f / 18f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Jump Multiplier",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
+                    Current = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
                     KeyboardStep = 1f / 6f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Next Jump Multiplier",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
+                    Current = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
                     KeyboardStep = 1f / 12f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
                     LabelText = "Next Multiplier",
-                    Bindable = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
+                    Current = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
                 },
                 new SettingsCheckbox
                 {
                     LabelText = "Bounce off borders",
-                    Bindable = config.GetBindable<bool>(OsuRulesetSetting.BorderBounce)
+                    Current = config.GetBindable<bool>(OsuRulesetSetting.BorderBounce)
                 }
             };
         }
