@@ -344,7 +344,7 @@ namespace osu.Game.Screens.Play
                     OnRetry = Restart,
                     OnQuit = performUserRequestedExit,
                 },
-                /*new HotkeyRetryOverlay
+                new HotkeyRetryOverlay
                 {
                     Action = () =>
                     {
@@ -363,7 +363,7 @@ namespace osu.Game.Screens.Play
                         fadeOut(true);
                         performImmediateExit();
                     },
-                },*/
+                },
                 failAnimation = new FailAnimation(DrawableRuleset) { OnComplete = onFailComplete, },
             }
         };
