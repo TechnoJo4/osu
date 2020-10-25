@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using osu.Framework.Bindables;
 using osu.Framework.Graphics;
 using osu.Framework.Graphics.Containers;
@@ -19,6 +20,8 @@ namespace osu.Game.Screens.Play.HUD
 {
     public class ModDisplay : Container, IHasCurrentValue<IReadOnlyList<Mod>>
     {
+        private const int fade_duration = 1000;
+
         public bool DisplayUnrankedText = true;
 
         public ExpansionMode ExpansionMode = ExpansionMode.ExpandOnHover;
@@ -95,12 +98,15 @@ namespace osu.Game.Screens.Play.HUD
             base.LoadComplete();
 
             appearTransform();
-            iconsContainer.Hide();
+            iconsContainer.FadeInFromZero(fade_duration, Easing.OutQuint);
         }
 
         private void appearTransform()
         {
-            unrankedText.Hide();
+            if (DisplayUnrankedText && Current.Value.Any(m => !m.Ranked))
+                unrankedText.FadeInFromZero(fade_duration, Easing.OutQuint);
+            else
+                unrankedText.Hide();
 
             expand();
 

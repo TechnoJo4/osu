@@ -67,7 +67,7 @@ namespace osu.Game.Screens.Play
 
         internal readonly IBindable<bool> IsBreakTime = new Bindable<bool>();
 
-        private IEnumerable<Drawable> hideTargets => new Drawable[] { visibilityContainer, KeyCounter };
+        private IEnumerable<Drawable> hideTargets => new Drawable[] { visibilityContainer, bottomRightElements, topRightElements };
 
         public HUDOverlay(ScoreProcessor scoreProcessor, HealthProcessor healthProcessor, DrawableRuleset drawableRuleset, IReadOnlyList<Mod> mods)
         {
@@ -245,8 +245,8 @@ namespace osu.Game.Screens.Play
 
             if (e.NewValue)
             {
-                PlayerSettingsOverlay.Show();
-                ModDisplay.Show();
+                // PlayerSettingsOverlay.Show();
+                // ModDisplay.Show();
                 KeyCounter.Margin = new MarginPadding(10) { Bottom = 30 };
             }
             else

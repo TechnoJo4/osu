@@ -344,7 +344,7 @@ namespace osu.Game.Screens.Play
                     OnRetry = Restart,
                     OnQuit = performUserRequestedExit,
                 },
-                new HotkeyRetryOverlay
+                /*new HotkeyRetryOverlay
                 {
                     Action = () =>
                     {
@@ -354,7 +354,7 @@ namespace osu.Game.Screens.Play
                         Restart();
                     },
                 },
-                /*new HotkeyExitOverlay
+                new HotkeyExitOverlay
                 {
                     Action = () =>
                     {
