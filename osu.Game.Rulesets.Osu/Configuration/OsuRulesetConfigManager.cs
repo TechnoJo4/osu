@@ -3,6 +3,7 @@
 
 using osu.Game.Configuration;
 using osu.Game.Rulesets.Configuration;
+using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Osu.Configuration
 {
@@ -34,6 +35,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.NextJumpMulti, 5f / 6f, 0f, 2f, float.Epsilon);
             Set(OsuRulesetSetting.NextMulti, 0.6f, 0f, 1f, float.Epsilon);
             Set(OsuRulesetSetting.BorderBounce, true);
+            Set(OsuRulesetSetting.PlayfieldBorderStyle, PlayfieldBorderStyle.None);
         }
     }
 
@@ -61,5 +63,6 @@ namespace osu.Game.Rulesets.Osu.Configuration
         NextJumpMulti,
         NextMulti,
         BorderBounce,
+        PlayfieldBorderStyle,
     }
 }

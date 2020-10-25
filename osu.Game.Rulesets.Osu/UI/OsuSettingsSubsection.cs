@@ -6,6 +6,7 @@ using osu.Framework.Graphics;
 using osu.Game.Graphics.UserInterface;
 using osu.Game.Overlays.Settings;
 using osu.Game.Rulesets.Osu.Configuration;
+using osu.Game.Rulesets.UI;
 
 namespace osu.Game.Rulesets.Osu.UI
 {
@@ -97,7 +98,12 @@ namespace osu.Game.Rulesets.Osu.UI
                 {
                     LabelText = "Bounce off borders",
                     Current = config.GetBindable<bool>(OsuRulesetSetting.BorderBounce)
-                }
+                },
+                new SettingsEnumDropdown<PlayfieldBorderStyle>
+                {
+                    LabelText = "Playfield border style",
+                    Current = config.GetBindable<PlayfieldBorderStyle>(OsuRulesetSetting.PlayfieldBorderStyle),
+                },
             };
         }
 
