@@ -45,6 +45,7 @@ namespace osu.Game.Screens.Play.HUD
             };
         }
 
+        protected override bool StartHidden => true;
         protected override void PopIn() => this.FadeIn(fade_duration);
         protected override void PopOut() => this.FadeOut(fade_duration);
 
