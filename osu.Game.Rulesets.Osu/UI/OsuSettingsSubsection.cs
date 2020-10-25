@@ -95,11 +95,6 @@ namespace osu.Game.Rulesets.Osu.UI
                     Current = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
                     KeyboardStep = 1f / 12f
                 },
-                new SettingsSlider<float, MultiplierSlider>
-                {
-                    LabelText = "Momentum: Next Multiplier",
-                    Current = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
-                },
                 new SettingsCheckbox
                 {
                     LabelText = "Bounce off borders",
