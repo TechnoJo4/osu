@@ -92,6 +92,11 @@ namespace osu.Game.Rulesets.Osu.UI
                 },
                 new SettingsCheckbox
                 {
+                    LabelText = "Skip Stack Angles",
+                    Current = config.GetBindable<bool>(OsuRulesetSetting.SkipStackAngles)
+                },
+                new SettingsCheckbox
+                {
                     LabelText = "Bounce off borders",
                     Current = config.GetBindable<bool>(OsuRulesetSetting.BorderBounce)
                 },

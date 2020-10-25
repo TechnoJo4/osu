@@ -33,6 +33,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.AngleOffset, 8f / 18f, 0f, 2f, float.Epsilon);
             Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
             Set(OsuRulesetSetting.NextJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.SkipStackAngles, true);
             Set(OsuRulesetSetting.BorderBounce, true);
             Set(OsuRulesetSetting.PlayfieldBorderStyle, PlayfieldBorderStyle.None);
         }
@@ -62,6 +63,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
         JumpMulti,
         NextJumpMulti,
         BorderBounce,
+        SkipStackAngles,
         PlayfieldBorderStyle,
     }
 }

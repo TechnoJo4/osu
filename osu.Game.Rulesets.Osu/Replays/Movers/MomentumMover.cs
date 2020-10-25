@@ -14,6 +14,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         private readonly float jmult;
         private readonly float nmult;
         private readonly float offsetMult;
+        private readonly bool skipstacks;
         private float offset => MathF.PI * offsetMult;
 
         private Vector2 p1;
@@ -26,7 +27,10 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             jmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
             nmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
             offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
+            skipstacks = c.Get<bool>(OsuRulesetSetting.SkipStackAngles);
         }
+
+        private bool same(OsuHitObject o1, OsuHitObject o2) => o1.StackedPosition == o2.StackedPosition || (skipstacks && o1.Position == o2.Position);
 
         private (float, bool) nextAngle()
         {
@@ -36,8 +40,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             {
                 var o = obj[i];
                 if (o is Slider s) return (s.GetStartAngle(), true);
-                if (o.StackedPosition != obj[i + 1].Position)
-                    return (o.StackedPosition.AngleRV(obj[i + 1].StackedPosition), false);
+                if (!same(o, obj[i + 1])) return (o.StackedPosition.AngleRV(obj[i + 1].StackedPosition), false);
             }
 
             return ((obj[^1] as Slider)?.GetEndAngle()
@@ -58,7 +61,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             if (!afs && MathF.Abs(a2 - a) < offset) a2 = a2 - a < offset ? a - offset : a + offset;
             p2 = V2FromRad(a2, dst * nmult) + EndPos;
 
-            if (!(End is Slider) && StartPos != EndPos) last = p2;
+            if (!(End is Slider) && !same(Start, End)) last = p2;
         }
 
         public override Vector2 Update(double time)
