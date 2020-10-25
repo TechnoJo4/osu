@@ -25,7 +25,7 @@ namespace osu.Game.Rulesets.Osu.Replays
                 HalfCircle => new HalfCircleMover(),
                 Flower => new FlowerMover(),
                 Momentum => new MomentumMover(),
-                _ => new LinearMover()
+                _ => new TestMover()
             };
 
         public new OsuBeatmap Beatmap => (OsuBeatmap)base.Beatmap;

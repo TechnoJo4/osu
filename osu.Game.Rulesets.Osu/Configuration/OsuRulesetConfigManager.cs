@@ -31,9 +31,10 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.ReplayFramerate, 120, 24, 1000, 2);
             Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Momentum);
             Set(OsuRulesetSetting.AngleOffset, 0.5f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.FlowerJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.MomentumJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
             Set(OsuRulesetSetting.NextJumpMulti, 5f / 6f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.NextMulti, 0.6f, 0f, 1f, float.Epsilon);
+            Set(OsuRulesetSetting.MomentumOffsetBias, false);
             Set(OsuRulesetSetting.BorderBounce, true);
             Set(OsuRulesetSetting.PlayfieldBorderStyle, PlayfieldBorderStyle.None);
         }
@@ -44,7 +45,8 @@ namespace osu.Game.Rulesets.Osu.Configuration
         Linear,
         HalfCircle,
         Flower,
-        Momentum
+        Momentum,
+        Test
     }
 
     public enum OsuRulesetSetting
@@ -59,9 +61,10 @@ namespace osu.Game.Rulesets.Osu.Configuration
         ReplayFramerate,
         DanceMover,
         AngleOffset,
-        JumpMulti,
+        FlowerJumpMulti,
+        MomentumJumpMulti,
+        MomentumOffsetBias,
         NextJumpMulti,
-        NextMulti,
         BorderBounce,
         PlayfieldBorderStyle,
     }

@@ -79,19 +79,25 @@ namespace osu.Game.Rulesets.Osu.UI
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
-                    LabelText = "Jump Multiplier",
-                    Current = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
+                    LabelText = "Flower: Jump Multiplier",
+                    Current = config.GetBindable<float>(OsuRulesetSetting.FlowerJumpMulti),
                     KeyboardStep = 1f / 6f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
-                    LabelText = "Next Jump Multiplier",
+                    LabelText = "Momentum: Jump Multiplier",
+                    Current = config.GetBindable<float>(OsuRulesetSetting.MomentumJumpMulti),
+                    KeyboardStep = 1f / 6f
+                },
+                new SettingsSlider<float, MultiplierSlider>
+                {
+                    LabelText = "Momentum: Next Jump Multiplier",
                     Current = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
                     KeyboardStep = 1f / 12f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
-                    LabelText = "Next Multiplier",
+                    LabelText = "Momentum: Next Multiplier",
                     Current = config.GetBindable<float>(OsuRulesetSetting.NextMulti),
                 },
                 new SettingsCheckbox

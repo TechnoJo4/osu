@@ -18,7 +18,6 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         private Vector2 p1;
         private Vector2 p2;
 
-        private bool firstPoint = true;
         private float invert = 1;
         private float lastAngle;
         private Vector2 lastPoint;
@@ -26,18 +25,12 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public FlowerMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            mult = c.Get<float>(OsuRulesetSetting.FlowerJumpMulti);
             offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
         }
 
         public override void OnObjChange()
         {
-            if (firstPoint)
-            {
-                lastAngle = MathF.Atan2(-StartY, -StartX);
-                firstPoint = false;
-            }
-
             var dst = mult * Vector2.Distance(StartPos, EndPos);
 
             var s1 = Start as Slider;
@@ -54,35 +47,27 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             else if (s1 != null)
             {
                 invert *= -1;
-
-                if (DurationF > 1)
-                    lastAngle = StartPos.AngleRV(EndPos) - newAngle;
-                else
-                    lastAngle = s1.GetEndAngle() + MathF.PI;
+                lastAngle = StartPos.AngleRV(EndPos) - newAngle;
 
                 p1 = V2FromRad(s1.GetEndAngle(), dst) + StartPos;
                 p2 = V2FromRad(lastAngle, dst) + EndPos;
             }
             else if (s2 != null)
             {
-                if (Duration > 1) lastAngle += MathF.PI;
+                lastAngle += MathF.PI;
                 p1 = V2FromRad(lastAngle, dst) + StartPos;
                 p2 = V2FromRad(s2.GetStartAngle(), dst) + EndPos;
             }
             else
             {
-                float angle;
-
-                if (Duration > 1 && AngleBetween(StartPos, lastPoint, EndPos) >= offset)
-                {
+                if (AngleBetween(StartPos, lastPoint, EndPos) >= offset)
                     invert *= -1;
-                    angle = StartPos.AngleRV(EndPos) - offset * invert;
-                }
-                else angle = lastAngle;
+
+                newAngle = StartPos.AngleRV(EndPos) - newAngle;
 
                 p1 = V2FromRad(lastAngle + MathF.PI, dst) + StartPos;
-                p2 = V2FromRad(angle, dst) + EndPos;
-                if (dst > 2) lastAngle = angle;
+                p2 = V2FromRad(newAngle, dst) + EndPos;
+                if (dst / mult > 2) lastAngle = newAngle;
             }
 
             lastPoint = StartPos;

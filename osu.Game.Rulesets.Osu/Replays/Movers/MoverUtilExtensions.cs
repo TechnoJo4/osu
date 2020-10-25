@@ -10,7 +10,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
     public static class MoverUtilExtensions
     {
         public static float AngleRV(this Vector2 v1, Vector2 v2) => MathF.Atan2(v1.Y - v2.Y, v1.X - v2.X);
-        public static Vector2 V2FromRad(float    rad, float   radius) => new Vector2(MathF.Cos(rad) * radius, MathF.Sin(rad) * radius);
+        public static Vector2 V2FromRad(float rad, float radius) => new Vector2(MathF.Cos(rad) * radius, MathF.Sin(rad) * radius);
 
         public static float GetEndAngle(this Slider s) => s.GetAngle();
         public static float GetStartAngle(this Slider s) => s.GetAngle(true);
