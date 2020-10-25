@@ -19,6 +19,8 @@ namespace osu.Game.Screens.Play.HUD
 {
     public class ModDisplay : Container, IHasCurrentValue<IReadOnlyList<Mod>>
     {
+        public bool DisplayUnrankedText = true;
+
         public ExpansionMode ExpansionMode = ExpansionMode.ExpandOnHover;
 
         private readonly Bindable<IReadOnlyList<Mod>> current = new Bindable<IReadOnlyList<Mod>>();
