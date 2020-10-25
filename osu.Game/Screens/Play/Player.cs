@@ -330,7 +330,7 @@ namespace osu.Game.Screens.Play
                 },
                 skipOverlay = new SkipOverlay(DrawableRuleset.GameplayStartTime)
                 {
-                    RequestSkip = GameplayClockContainer.Skip
+                    RequestSkip = GameplayClockContainer.Skip,
                 },
                 FailOverlay = new FailOverlay
                 {
@@ -354,7 +354,7 @@ namespace osu.Game.Screens.Play
                         Restart();
                     },
                 },
-                new HotkeyExitOverlay
+                /*new HotkeyExitOverlay
                 {
                     Action = () =>
                     {
@@ -363,7 +363,7 @@ namespace osu.Game.Screens.Play
                         fadeOut(true);
                         performImmediateExit();
                     },
-                },
+                },*/
                 failAnimation = new FailAnimation(DrawableRuleset) { OnComplete = onFailComplete, },
             }
         };
@@ -582,7 +582,7 @@ namespace osu.Game.Screens.Play
             // must pass basic screen conditions (beatmap loaded, instance allows pause)
             LoadedBeatmapSuccessfully && allowPause && ValidForResume
             // replays cannot be paused and exit immediately
-            && !DrawableRuleset.HasReplayLoaded.Value
+            //&& !DrawableRuleset.HasReplayLoaded.Value
             // cannot pause if we are already in a fail state
             && !HasFailed
             // cannot pause if already paused (or in a cooldown state) unless we are in a resuming state.

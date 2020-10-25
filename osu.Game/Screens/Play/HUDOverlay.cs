@@ -246,13 +246,13 @@ namespace osu.Game.Screens.Play
             if (e.NewValue)
             {
                 PlayerSettingsOverlay.Show();
-                ModDisplay.FadeIn(200);
+                ModDisplay.Show();
                 KeyCounter.Margin = new MarginPadding(10) { Bottom = 30 };
             }
             else
             {
                 PlayerSettingsOverlay.Hide();
-                ModDisplay.Delay(2000).FadeOut(200);
+                ModDisplay.Hide();
                 KeyCounter.Margin = new MarginPadding(10);
             }
 
