@@ -64,7 +64,8 @@ namespace osu.Game.Rulesets.Osu.UI
                 new SettingsSlider<float, FramerateSlider>
                 {
                     LabelText = "Autoplay framerate",
-                    Current = config.GetBindable<float>(OsuRulesetSetting.ReplayFramerate)
+                    Current = config.GetBindable<float>(OsuRulesetSetting.ReplayFramerate),
+                    KeyboardStep = 30f
                 },
                 new SettingsEnumDropdown<OsuDanceMover>
                 {
@@ -79,19 +80,13 @@ namespace osu.Game.Rulesets.Osu.UI
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
-                    LabelText = "Flower: Jump Multiplier",
-                    Current = config.GetBindable<float>(OsuRulesetSetting.FlowerJumpMulti),
-                    KeyboardStep = 1f / 6f
+                    LabelText = "Jump Multiplier",
+                    Current = config.GetBindable<float>(OsuRulesetSetting.JumpMulti),
+                    KeyboardStep = 1f / 12f
                 },
                 new SettingsSlider<float, MultiplierSlider>
                 {
-                    LabelText = "Momentum: Jump Multiplier",
-                    Current = config.GetBindable<float>(OsuRulesetSetting.MomentumJumpMulti),
-                    KeyboardStep = 1f / 6f
-                },
-                new SettingsSlider<float, MultiplierSlider>
-                {
-                    LabelText = "Momentum: Next Jump Multiplier",
+                    LabelText = "Next Jump Multiplier",
                     Current = config.GetBindable<float>(OsuRulesetSetting.NextJumpMulti),
                     KeyboardStep = 1f / 12f
                 },

@@ -28,13 +28,11 @@ namespace osu.Game.Rulesets.Osu.Configuration
             Set(OsuRulesetSetting.CursorTrailDensity, 2.5f, 0.1f, 10.0f, 0.05f);
             Set(OsuRulesetSetting.CursorTrailCombo, true);
             Set(OsuRulesetSetting.CursorTrailHueShift, true);
-            Set(OsuRulesetSetting.ReplayFramerate, 120, 24, 1000, 2);
+            Set(OsuRulesetSetting.ReplayFramerate, 120f, 24f, 990f, 2f);
             Set(OsuRulesetSetting.DanceMover, OsuDanceMover.Momentum);
-            Set(OsuRulesetSetting.AngleOffset, 0.5f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.FlowerJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.MomentumJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.NextJumpMulti, 5f / 6f, 0f, 2f, float.Epsilon);
-            Set(OsuRulesetSetting.MomentumOffsetBias, false);
+            Set(OsuRulesetSetting.AngleOffset, 8f / 18f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.JumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
+            Set(OsuRulesetSetting.NextJumpMulti, 2f / 3f, 0f, 2f, float.Epsilon);
             Set(OsuRulesetSetting.BorderBounce, true);
             Set(OsuRulesetSetting.PlayfieldBorderStyle, PlayfieldBorderStyle.None);
         }
@@ -61,9 +59,7 @@ namespace osu.Game.Rulesets.Osu.Configuration
         ReplayFramerate,
         DanceMover,
         AngleOffset,
-        FlowerJumpMulti,
-        MomentumJumpMulti,
-        MomentumOffsetBias,
+        JumpMulti,
         NextJumpMulti,
         BorderBounce,
         PlayfieldBorderStyle,

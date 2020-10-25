@@ -12,6 +12,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
     public class FlowerMover : BaseDanceMover
     {
         private readonly float mult;
+        private readonly float nmult;
         private readonly float offsetMult;
         private float offset => MathF.PI * offsetMult;
 
@@ -25,13 +26,16 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public FlowerMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            mult = c.Get<float>(OsuRulesetSetting.FlowerJumpMulti);
+            mult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            nmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
             offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
         }
 
         public override void OnObjChange()
         {
-            var dst = mult * Vector2.Distance(StartPos, EndPos);
+            var dst = Vector2.Distance(StartPos, EndPos);
+            var scaled = mult * dst;
+            var next = nmult * dst;
 
             var s1 = Start as Slider;
             var s2 = End as Slider;
@@ -41,22 +45,22 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
             if (s1 != null && s2 != null)
             {
                 invert *= -1;
-                p1 = V2FromRad(s1.GetEndAngle(), dst) + StartPos;
-                p2 = V2FromRad(s2.GetStartAngle(), dst) + EndPos;
+                p1 = V2FromRad(s1.GetEndAngle(), scaled) + StartPos;
+                p2 = V2FromRad(s2.GetStartAngle(), next) + EndPos;
             }
             else if (s1 != null)
             {
                 invert *= -1;
                 lastAngle = StartPos.AngleRV(EndPos) - newAngle;
 
-                p1 = V2FromRad(s1.GetEndAngle(), dst) + StartPos;
-                p2 = V2FromRad(lastAngle, dst) + EndPos;
+                p1 = V2FromRad(s1.GetEndAngle(), scaled) + StartPos;
+                p2 = V2FromRad(lastAngle, next) + EndPos;
             }
             else if (s2 != null)
             {
                 lastAngle += MathF.PI;
-                p1 = V2FromRad(lastAngle, dst) + StartPos;
-                p2 = V2FromRad(s2.GetStartAngle(), dst) + EndPos;
+                p1 = V2FromRad(lastAngle, scaled) + StartPos;
+                p2 = V2FromRad(s2.GetStartAngle(), next) + EndPos;
             }
             else
             {
@@ -65,9 +69,9 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 
                 newAngle = StartPos.AngleRV(EndPos) - newAngle;
 
-                p1 = V2FromRad(lastAngle + MathF.PI, dst) + StartPos;
-                p2 = V2FromRad(newAngle, dst) + EndPos;
-                if (dst / mult > 2) lastAngle = newAngle;
+                p1 = V2FromRad(lastAngle + MathF.PI, scaled) + StartPos;
+                p2 = V2FromRad(newAngle, next) + EndPos;
+                if (scaled / mult > 2) lastAngle = newAngle;
             }
 
             lastPoint = StartPos;

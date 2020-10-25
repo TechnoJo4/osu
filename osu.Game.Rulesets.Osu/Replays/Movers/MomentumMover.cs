@@ -12,7 +12,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
     public class MomentumMover : BaseDanceMover
     {
         private readonly float jmult;
-        private readonly float njmult;
+        private readonly float nmult;
         private readonly float offsetMult;
         private float offset => MathF.PI * offsetMult;
 
@@ -23,8 +23,8 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public MomentumMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            jmult = c.Get<float>(OsuRulesetSetting.MomentumJumpMulti);
-            njmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
+            jmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
+            nmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
             offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
         }
 
@@ -56,7 +56,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
 
             var a = EndPos.AngleRV(StartPos);
             if (!afs && MathF.Abs(a2 - a) < offset) a2 = a2 - a < offset ? a - offset : a + offset;
-            p2 = V2FromRad(a2, dst * njmult) + EndPos;
+            p2 = V2FromRad(a2, dst * nmult) + EndPos;
 
             if (!(End is Slider) && StartPos != EndPos) last = p2;
         }

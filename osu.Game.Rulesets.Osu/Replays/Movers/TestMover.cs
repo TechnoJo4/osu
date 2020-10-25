@@ -23,7 +23,7 @@ namespace osu.Game.Rulesets.Osu.Replays.Movers
         public TestMover()
         {
             var c = OsuRulesetConfigManager.Instance;
-            jmult = c.Get<float>(OsuRulesetSetting.MomentumJumpMulti);
+            jmult = c.Get<float>(OsuRulesetSetting.JumpMulti);
             njmult = c.Get<float>(OsuRulesetSetting.NextJumpMulti);
             offsetMult = c.Get<float>(OsuRulesetSetting.AngleOffset);
         }
